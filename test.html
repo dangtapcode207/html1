@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <div class="univer">
+
+        <div class="box-input">
+            <label for="speedE">Speed Earth:</label>
+            <input type='range' max="5" min="1" value="3" id="speedE" title="speed Earth">
+            <br>
+            <br>
+            <label for="BEarth">Bật/Tắt quỹ đạo:</label>
+            <button onclick="updateOrE()" id="BEarth">Off</button>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="box-input">
+            <label for="speedM">Speed Mars:</label>
+            <input type="range" max="8" min="1" value="5" id="speedM" title="speed Mars">
+            <br>
+            <br>
+            <label for="BMar">Bật/Tắt quỹ đạo:</label>
+            <button onclick="updateOrM()" id="BMar">Off</button>
+        </div>
+
+        <div class="Sun"></div>
+
+        <div class="OrbitalE">
+            <div class="Earth"></div>
+        </div>
+
+        <div class="OrbitalM">
+            <div class="Mar"></div>
+        </div>
+    </div>
+</html>
+
+<style>
+    .box-input {
+        display: flex;
+        margin: 10px;
+    }
+    .label {
+        width: 100px;
+    }
+    input[type = "range"] {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        align-self: flex-start;
+    }
+    .univer {
+        display: flex;
+        height: 745px;
+        width: 1520px;
+        background-color: darkslateblue;
+    }
+    .Sun {
+        height: 150px;
+        width: 150px;
+        background-color: orangered;
+        box-shadow: 5px 5px 15px orangered;
+        box-shadow: inset;
+        border-radius: 50%;
+        position: absolute;
+        display: flex;
+        top: 372px;
+        left: 760px;
+        transform: translate(-50%, -50%);
+    }
+    .OrbitalE {
+        height: 250px;
+        width: 250px;
+        background-color: none;
+        border-radius: 50%;
+        border: 2px solid;
+        position: absolute;
+        display: flex;
+        left: 635px;
+        top: 247px;
+        transform-origin: center;
+    }
+    .OrbitalM {
+        height: 350px;
+        width: 350px;
+        background-color: none;
+        border-radius: 50%;
+        border: 2px solid;
+        position: absolute;
+        display: flex;
+        left: 585px;
+        top: 197px;
+        transform-origin: center;
+    }
+    .Earth {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        background-image: linear-gradient(to bottom, darkgrey 50%, skyblue 50%);
+        background-size: 200% 100%;
+        box-shadow: 5px 5px 15px skyblue;
+        box-shadow: inset;
+        top: 0%;
+        left: 50%;
+        transform: translateY(-50%);
+    }
+    .Mar {
+        height: 30px;
+        width: 30px;
+        background-color: brown;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        box-shadow: 5px 5px 15px brown;
+        box-shadow: inset;
+        top: 0%;
+        left: 50%;
+        transform: translateY(-50%);
+    }
+
+    #BEarth{
+        height: 30px;
+        width: 50px;
+        background-color: skyblue;
+        color: black;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    #BMar{
+        height: 30px;
+        width: 50px;
+        background-color: brown;
+        color: black;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+        text-align: center;
+    }
+</style>
+
+<script>
+    const orbitalE = document.querySelector(".OrbitalE");
+    const speedEInput = document.getElementById("speedE");
+    const orbitalM = document.querySelector(".OrbitalM");
+    const speedMInput = document.getElementById("speedM");
+
+    let speedE = parseFloat(speedEInput.value);
+    let angleE = 0; 
+    let preTimeE = Date.now();
+
+    let speedM = parseFloat(speedMInput.value);
+    let angleM = 0;
+    let preTimeM = Date.now();
+
+    let BEarth = document.getElementById("BEarth")
+    let textplaceE = "On";
+    const BMar = document.getElementById("BMar")
+    let textplaceM = "On";
+
+
+    updateRotationE();
+    updateRotationM();
+
+    function updateRotationE() {
+        const nowTimeE = Date.now();
+        const deltaTimeE = (nowTimeE - preTimeE) / 1000;
+        preTimeE = nowTimeE;
+        angleE += (360 / speedE) * deltaTimeE; 
+        angleE %= 360; 
+        orbitalE.style.transform = `rotate(${angleE}deg)`;
+        requestAnimationFrame(updateRotationE);
+    }
+    function updateRotationM() {
+        const nowTimeM = Date.now();
+        const deltaTimeM = (nowTimeM - preTimeM) / 1000;
+        preTimeM = nowTimeM;
+        angleM += (360/speedM) * deltaTimeM;
+        angleM %= 360;
+        orbitalM.style.transform = `rotate(${angleM}deg)`;
+        requestAnimationFrame(updateRotationM);
+    }
+
+    function updateOrE(){
+        if(textplaceE === "On"){
+            textplaceE = "Off"
+            BEarth.textContent = "On"
+            orbitalE.style.border = 0 + "px solid"
+        }
+        else{
+            textplaceE = "On"
+            BEarth.textContent = "Off"
+            orbitalE.style.border = 2 + "px solid"
+        }
+    }
+    function updateOrM(){
+        if(textplaceM === "On"){
+            textplaceM = "Off"
+            BMar.textContent = "On"
+            orbitalM.style.border = 0 + "px solid"
+        }
+        else{
+            textplaceM = "On"
+            BMar.textContent = "Off"
+            orbitalM.style.border = 2 + "px solid"
+        }
+    }
+
+    speedMInput.addEventListener("input", () => {
+        speedM = parseFloat(speedMInput.value);
+    });
+    speedEInput.addEventListener("input", () => {
+        speedE = parseFloat(speedEInput.value);
+    });
+</script>
