@@ -1,64 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <div class="container"></div>
+
+<table border="2px solid">
+  <tr>
+    <table border="2px solid">
+      <tr>
+        <p>Chào</p>
+      </tr>
+      <tr>
+        <p>Chào2</p>
+      </tr>
+    </table>
+    <table border="2px solid">
+      <tr>
+        <p>Chào3</p>
+      </tr>
+      <tr>
+        <p>Chào 4</p>
+      </tr>
+    </table>
+  </tr>
+</table>
 </html>
-<style>
-    .container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none; /* Ngăn chặn các sự kiện chuột */
-      }
-      
-      .dot {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        /* Các thuộc tính về màu sắc, animation sẽ được thêm vào bằng JavaScript */
-      }
-      @keyframes blink {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0.2;
-        }
-      }
-</style>
-<script>
-    const container = document.querySelector('.container');
-
-function createDot() {
-  const dot = document.createElement('div');
-  dot.classList.add('dot');
-
-  // Tạo vị trí ngẫu nhiên
-  dot.style.left = `${Math.random() * 100}%`;
-  dot.style.top = `${Math.random() * 100}%`;
-
-  // Tạo kích thước ngẫu nhiên
-  const size = Math.random() * 10 + 5; // Kích thước từ 5px đến 15px
-  dot.style.width = `${size}px`;
-  dot.style.height = `${size}px`;
-
-  // Tạo màu sắc ngẫu nhiên
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-  dot.style.backgroundColor = randomColor;
-
-  // Thêm hiệu ứng động (tùy chọn)
-  dot.style.animation = 'blink 1s infinite alternate';
-
-  container.appendChild(dot);
-}
-
-// Tạo một số lượng đốm ngẫu nhiên
-const numDots = 100; // Thay đổi số lượng đốm theo ý muốn
-for (let i = 0; i < numDots; i++) {
-  createDot();
-}
-
-</script>

@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html>
     <div class="univer">
+        <table>
+            <tr>
+                <div class="box-input">
+                    <label for="speedE">Speed Earth:</label>
+                    <input type='range' max="5" min="1" value="3" id="speedE" title="speed Earth">
+                    <br>
+                    <label for="BEarth">Bật/Tắt quỹ đạo:</label>
+                    <button onclick="updateOrE()" id="BEarth">Off</button>
+                </div>
+            </tr>
+    
+            <tr>
+                <div class="box-input">
+                    <label for="speedM">Speed Mars:</label>
+                    <input type="range" max="8" min="1" value="5" id="speedM" title="speed Mars">
+                    <br>
+                    <label for="BMar">Bật/Tắt quỹ đạo:</label>
+                    <button onclick="updateOrM()" id="BMar">Off</button>
+                </div>
+            </tr>
+        </table>
+    </div>
 
-        <div class="box-input">
-            <label for="speedE">Speed Earth:</label>
-            <input type='range' max="5" min="1" value="3" id="speedE" title="speed Earth">
-            <br>
-            <label for="BEarth">Bật/Tắt quỹ đạo:</label>
-            <button onclick="updateOrE()" id="BEarth">Off</button>
+    <div class="Sun"></div>
+
+    <div class="OrbitalE">
+        <div class="Earth">
+            <div class="Moon"></div>
         </div>
+    </div>
 
-        <br>
-
-        <div class="box-input">
-            <label for="speedM">Speed Mars:</label>
-            <input type="range" max="8" min="1" value="5" id="speedM" title="speed Mars">
-            <br>
-            <label for="BMar">Bật/Tắt quỹ đạo:</label>
-            <button onclick="updateOrM()" id="BMar">Off</button>
-        </div>
-
-        <div class="Sun"></div>
-
-        <div class="OrbitalE">
-            <div class="Earth">
-                <div class="Moon"></div>
-            </div>
-        </div>
-
-        <div class="OrbitalM">
-            <div class="Mar"></div>
-        </div>
+    <div class="OrbitalM">
+        <div class="Mar"></div>
     </div>
 </html>
 
@@ -38,6 +41,15 @@
     .box-input {
         display: flex;
         margin: 10px;
+        padding: 10px;
+        height: auto;
+        width: 400px;
+        transform-origin: center;
+        flex-direction: column;
+        transform: translateX(-95%);
+        transition: transform 1s ease-in-out;
+        background-color: gray;
+        border: 2px solid;
     }
     .label {
         width: 100px;
@@ -49,14 +61,15 @@
         align-self: flex-start;
     }
     .univer {
-        display: flex;
+        display: block;
         height: 745px;
         width: 1520px;
         background-color: darkslateblue;
+        position: relative;
     }
     .Sun {
-        height: 150px;
-        width: 150px;
+        height: 100px;
+        width: 100px;
         background-color: orangered;
         box-shadow: 5px 5px 15px orangered;
         box-shadow: inset;
@@ -180,32 +193,39 @@
 </style>
 
 <script>
+    /* TẠO CÁC BIẾN CHO EARTH*/
     const orbitalE = document.querySelector(".OrbitalE");
     const speedEInput = document.getElementById("speedE");
-
-    const orbitalM = document.querySelector(".OrbitalM");
-    const speedMInput = document.getElementById("speedM");
-
-    let ButtonE = document.querySelector("#BEarth");
-    let ButtonM = document.querySelector("#BMar");
-
     let speedE = parseFloat(speedEInput.value);
     let angleE = 0; 
     let preTimeE = Date.now();
 
+
+    /* TẠO CÁC BIẾN CHO Mar*/
+    const orbitalM = document.querySelector(".OrbitalM");
+    const speedMInput = document.getElementById("speedM");
     let speedM = parseFloat(speedMInput.value);
     let angleM = 0;
     let preTimeM = Date.now();
 
+    /* TẠO CÁC BIẾN CHO NÚT CỦA EARTH*/
+    let ButtonE = document.querySelector("#BEarth");
     let BEarth = document.getElementById("BEarth")
     let textplaceE = "On";
+
+    /* TẠO CÁC BIẾN CHO NÚT CỦA MAR*/
+    let ButtonM = document.querySelector("#BMar");
     const BMar = document.getElementById("BMar")
     let textplaceM = "On";
+
+    /* TẠO CÁC BIẾN CHO BOX-INPUT*/
+    const boxinputs = document.querySelectorAll(".box-input");
 
 
     updateRotationE();
     updateRotationM();
 
+    /* HÀM CẬP NHẬT GÓC QUAY EARTH*/
     function updateRotationE() {
         const nowTimeE = Date.now();
         const deltaTimeE = (nowTimeE - preTimeE) / 1000;
@@ -215,6 +235,7 @@
         orbitalE.style.transform = `rotate(${angleE}deg)`;
         requestAnimationFrame(updateRotationE);
     }
+    /* HÀM CẬP NHẬT GÓC QUAY MAR*/
     function updateRotationM() {
         const nowTimeM = Date.now();
         const deltaTimeM = (nowTimeM - preTimeM) / 1000;
@@ -224,7 +245,7 @@
         orbitalM.style.transform = `rotate(${angleM}deg)`;
         requestAnimationFrame(updateRotationM);
     }
-
+    /* HÀM CẬP NHẬT BẬT TẮT QUỸ ĐẠO*/
     function updateOrE(){
         if(textplaceE === "On"){
             textplaceE = "Off"
@@ -255,10 +276,20 @@
         }
     }
 
+    /* KIỂM TRA SỰ THAY ĐỔI CỦA INPUT*/
     speedMInput.addEventListener("input", () => {
         speedM = parseFloat(speedMInput.value);
     });
     speedEInput.addEventListener("input", () => {
         speedE = parseFloat(speedEInput.value);
     });
+        /* KIỂM TRA SỰ THAY ĐỔI CỦA BOXINPUT*/
+    boxinputs.forEach((boxinput)=>{
+        boxinput.addEventListener("mouseover",()=>{
+            boxinput.style.transform = "translateX(0px)"
+        })
+        boxinput.addEventListener("mouseout",()=>{
+            boxinput.style.transform = "translateX(-380px)"
+        })
+    })
 </script>
