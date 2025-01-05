@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <div class="box">
+    <table align="center">
+      <tr>
+        <td><input type="email" id="inputemail"></td>
+        <td><button onclick="check()" id="buttoncheck">Đăng nhập</button></td>
+        <td><button onclick="createuser()" id="buttoncreate">Tạo tài khoản</button></td>
+      </tr>
+
+      <tr>
+        <td><input type="password" id="inputpassword"></td>
+        <td colspan="2"><p id="result"></p></td>
+      </tr>
+    </table>
+  </div>
+</html>
+
+<script>
+  const inputemail = document.getElementById("inputemail")
+  const inputpassword = document.getElementById("inputpassword")
+  let username = ["phuong","phuong1","phuong2"]
+  let passwordcheck =["123","12","1234"]
+  let result = ""
+
+  const buttoncheck = document.getElementById("buttoncheck")
+  const buttoncreate = document.getElementById("buttoncreate")
+  ChangeShadow()
+
+  function ChangeShadow(){
+    buttoncheck.addEventListener("mouseover",()=>{
+      buttoncheck.style.boxShadow = "5px 5px 15px black"
+    })
+    buttoncheck.addEventListener("mouseout",()=>{
+      buttoncheck.style.boxShadow = "5px 5px 15px grey"
+    })
+    buttoncreate.addEventListener("mouseover",()=>{
+      buttoncreate.style.boxShadow = "5px 5px 15px black"
+    })
+    buttoncreate.addEventListener("mouseout",()=>{
+      buttoncreate.style.boxShadow = "5px 5px 15px grey"
+    })
+    inputemail.addEventListener("focus",()=>{
+      inputemail.style.boxShadow = "5px 5px 15px black"
+    })
+    inputemail.addEventListener("blur",()=>{
+      inputemail.style.boxShadow = "5px 5px 15px grey"
+    })
+    inputpassword.addEventListener("focus",()=>{
+      inputpassword.style.boxShadow = "5px 5px 15px black"
+    })
+    inputpassword.addEventListener("blur",()=>{
+      inputpassword.style.boxShadow = "5px 5px 15px grey"
+    })
+  }
+
+  function createuser(){
+    if(username.indexOf(inputemail.value) !== -1){
+      result = "Tài khoản đã tồn tại"
+    }
+    else{
+      username.push(inputemail.value)
+      passwordcheck.push(inputpassword.value)
+      result = "Đã tạo tài khoản"
+    }
+    document.getElementById("result").innerHTML = result
+  }
+  function check(){
+    for(let i=0;i < username.length;i++){
+      if(username[i] === inputemail.value){
+        if(passwordcheck[i] === inputpassword.value){
+          result = "đã đăng nhập"
+          break
+        }
+        else{
+          result = "Sai mật khẩu"
+          break
+        }
+      }
+    }
+    if(username.indexOf(inputemail.value) === -1){
+      result = "Không có tài khoản này"
+    }
+    
+    document.getElementById("result").innerHTML = result
+  }
+</script>
+
+<style>
+  .box{
+    height: 70px;
+    width: 400px;
+    margin: 10px;
+    padding: 10px;
+    background-color: skyblue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 5px 5px 15px skyblue;
+  }
+  tr{
+    line-height: 30px;
+  }
+  #result{
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  input[type="email"]{
+    box-shadow: 5px 5px 15px grey;
+  }
+  input[type="password"]{
+    box-shadow: 5px 5px 15px grey;
+  }
+</style>
