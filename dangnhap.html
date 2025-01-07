@@ -16,7 +16,31 @@
   </div>
 </html>
 
+
 <script>
+  /* TẠO THÊM HIỆU ỨNG*/
+  let x = 0; y = 0;
+  let direct = 0;
+  const box = document.querySelector(".box");
+
+  document.addEventListener("mousemove", (event)=>{
+    x = event.clientX;
+    y = event.clientY;
+    direct = Math.sqrt(Math.pow(792-x , 2) + Math.pow(400-y , 2));
+    direct / 120;
+    if(direct < 15){
+      box.style.boxShadow = "5px 5px 15px blue, 0 0 10px blue";
+    }
+    else{
+      box.style.boxShadow = "5px 5px " + direct + "px" + " blue, 0 0 10px blue";
+    }
+  })
+
+</script>
+
+
+<script>
+  /* TẠO XỬ LÝ LOGIC CỦA ĐĂNG NHẬP*/
   const inputemail = document.getElementById("inputemail")
   const inputpassword = document.getElementById("inputpassword")
   let username = ["phuong","phuong1","phuong2"]
@@ -97,7 +121,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    box-shadow: 5px 5px 15px skyblue;
+    box-shadow: 5px 5px 15px slateblue, 0 0 10px slateblue;
   }
   tr{
     line-height: 30px;
